@@ -80,7 +80,7 @@
         }
     },
     "variables": {
-        "quickstartRepoRoot": "https://github.com/aravindan545/GACLab/tree/master/Environments/ServiceFabric-LabCluster",
+        "quickstartRepoRoot": "https://raw.githubusercontent.com/aravindan545/GACLab/master/Environments/ServiceFabric-LabCluster",
         "clusterName": "[concat('sf-', toLower(uniqueString(resourceGroup().name)))]",
         "vaultName": "[concat('kv-', toLower(uniqueString(resourceGroup().name)))]",
         "vaultSecret": "ClusterCertificate",
