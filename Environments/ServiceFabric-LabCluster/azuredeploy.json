@@ -86,7 +86,7 @@
         "vaultSecret": "ClusterCertificate",
         "loadBalancedAppPort1": "[parameters('appPort1')]",
         "loadBalancedAppPort2": "[parameters('appPort2')]",
-        "nt0InstanceCount": 5,
+        "nt0InstanceCount": 3,
         "addressPrefix": "[parameters('addressPrefix')]",
         "subnet0Prefix": "[parameters('subnet0Prefix')]"
 
@@ -243,6 +243,12 @@
                     },
                     "nodeDataDrive": {
                         "value": "OS"
+                    },
+                    "addressPrefix": {
+                        "value": "[variables('addressPrefix')]"
+                    },
+                    "subnet0Prefix": {
+                        "value": "[variables('subnet0Prefix')]"
                     }
                 }
             }
