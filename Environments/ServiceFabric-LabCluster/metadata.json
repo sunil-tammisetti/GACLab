@@ -1,4 +1,6 @@
 {
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "type": "QuickStart",
   "itemDisplayName": "Service Fabric Lab Cluster -custom",
   "githubUsername": "Microsoft",
   "description": "A secure 3 node, single nodetype Service fabric Cluster.",
