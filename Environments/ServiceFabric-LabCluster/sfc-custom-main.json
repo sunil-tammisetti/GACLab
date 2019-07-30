@@ -571,7 +571,8 @@
                             "managedDisk": {
                                 "storageAccountType": "Standard_LRS"
                             },
-                            "caching": "ReadOnly",
+                            "caching": "ReadWrite",
+                            "diskSizeGB": 128,
                             "createOption": "FromImage"
                         }
                     }
