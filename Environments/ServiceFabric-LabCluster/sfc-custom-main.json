@@ -437,8 +437,10 @@
                             {
                                 "name": "[concat('ServiceFabricNodeVmExt','_vmNodeType0Name')]",
                                 "properties": {
-                                    "type": "ServiceFabricNode",
-                                    "autoUpgradeMinorVersion": true,
+                                      "publisher": "Microsoft.Compute",
+                                      "type": "CustomScriptExtension",
+                                      "typeHandlerVersion": "1.9",
+                                      "autoUpgradeMinorVersion": true,
                                      "settings": {
                                             "fileUris": [
                                               "[concat(parameters('scriptLocation'),'/setupNode.ps1')]"
@@ -446,6 +448,8 @@
                                                 },
                                     "protectedSettings": {
                                          "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File CreateDisk.ps1",
+                                         "storageAccountName": "[parameters('scriptStorageAccount')]",
+                                          "storageAccountKey": "[parameters('scriptStorageAccountKey')]",
                                         "StorageAccountKey1": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
                                         "StorageAccountKey2": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('supportLogStorageAccountName')),'2015-05-01-preview').key2]"
                                     },
