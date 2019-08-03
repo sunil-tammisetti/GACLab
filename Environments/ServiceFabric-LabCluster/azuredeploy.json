@@ -61,24 +61,7 @@
                 "description": "VNet subnet range"
             }
         },
-        "scriptLocation": {
-  "type": "string",
-  "metadata": {
-    "description": "Location of custom extension scripts on storage account container"
-  }
-},
-"scriptStorageAccount": {
-  "type": "string",
-  "metadata": {
-    "description": "Name of custom extension scripts storage account"
-  }
-},
-"scriptStorageAccountKey": {
-  "type": "string",
-  "metadata": {
-    "description": "Key to custom extension scripts storage account"
-  }
-},
+       
 
         "appPort1": {
             "type": "int",
