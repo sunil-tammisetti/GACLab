@@ -435,8 +435,7 @@
                     "extensionProfile": {
                         "extensions": [
                             {
-                                
-                                "name": "[concat(parameters('vmNodeType0Name'),'_ServiceFabricNode')]",
+                                "name": "[concat('ServiceFabricNodeVmExt','_vmNodeType0Name')]",
                                 "properties": {
                                     "type": "ServiceFabricNode",
                                     "autoUpgradeMinorVersion": true,
@@ -447,11 +446,10 @@
                                     "publisher": "Microsoft.Azure.ServiceFabric",
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
-                                        "nodeTypeRef": "[parameters('vmNodeType0Name')]",
-                                        "dataPath": "D:\\\\SvcFab",
+                                        "nodeTypeRef": "[variables('vmNodeType0Name')]",
+                                        "dataPath": "[concat(if(equals(parameters('nodeDataDrive'), 'OS'), 'C', 'D'), ':\\\\SvcFab')]",
                                         "durabilityLevel": "Bronze",
-                                        "enableParallelJobs": true,
-                                        "nicPrefixOverride": "[parameters('subnet0Prefix')]",
+                                        "nicPrefixOverride": "[variables('subnet0Prefix')]",
                                         "certificate": {
                                             "thumbprint": "[parameters('certificateThumbprint')]",
                                             "x509StoreName": "[parameters('certificateStoreValue')]"
