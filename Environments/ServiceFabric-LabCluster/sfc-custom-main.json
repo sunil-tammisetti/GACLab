@@ -435,31 +435,23 @@
                     "extensionProfile": {
                         "extensions": [
                             {
-                                "name": "[concat('ServiceFabricNodeVmExt','_vmNodeType0Name')]",
+                                
+                                "name": "[concat(parameters('vmNodeType0Name'),'_ServiceFabricNode')]",
                                 "properties": {
-                                      "publisher": "Microsoft.Compute",
-                                      "type": "CustomScriptExtension",
-                                      "typeHandlerVersion": "1.9",
-                                      "autoUpgradeMinorVersion": true,
-                                     "settings": {
-                                            "fileUris": [
-                                              "[concat(parameters('scriptLocation'),'/setupNode.ps1')]"
-                                                        ]
-                                                },
+                                    "type": "ServiceFabricNode",
+                                    "autoUpgradeMinorVersion": true,
                                     "protectedSettings": {
-                                         "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File CreateDisk.ps1",
-                                         "storageAccountName": "[parameters('scriptStorageAccount')]",
-                                          "storageAccountKey": "[parameters('scriptStorageAccountKey')]",
-                                        "StorageAccountKey1": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
-                                        "StorageAccountKey2": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('supportLogStorageAccountName')),'2015-05-01-preview').key2]"
+                                        "StorageAccountKey1": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
+                                        "StorageAccountKey2": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key2]"
                                     },
                                     "publisher": "Microsoft.Azure.ServiceFabric",
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
-                                        "nodeTypeRef": "[variables('vmNodeType0Name')]",
-                                        "dataPath": "[concat(if(equals(parameters('nodeDataDrive'), 'OS'), 'C', 'D'), ':\\\\SvcFab')]",
+                                        "nodeTypeRef": "[parameters('vmNodeType0Name')]",
+                                        "dataPath": "D:\\\\SvcFab",
                                         "durabilityLevel": "Bronze",
-                                        "nicPrefixOverride": "[variables('subnet0Prefix')]",
+                                        "enableParallelJobs": true,
+                                        "nicPrefixOverride": "[parameters('subnet0Prefix')]",
                                         "certificate": {
                                             "thumbprint": "[parameters('certificateThumbprint')]",
                                             "x509StoreName": "[parameters('certificateStoreValue')]"
@@ -519,6 +511,22 @@
                                     },
                                     "typeHandlerVersion": "1.5"
                                 }
+                                
+                            },
+                            {
+                                "properties": {
+                                    "publisher": "Microsoft.Compute",
+                                    "type": "CustomScriptExtension",
+                                    "typeHandlerVersion": "1.9",
+                                    "autoUpgradeMinorVersion": true,
+                                    "settings": {
+                                        "fileUris": [
+                                            "https://gist.githubusercontent.com/chunliu/8b3c495f7ff0289c19d7d359d9e14f0d/raw/15fd112bcdcdeb971f00921e415e9f793e2ed6a5/config-docker.ps1"
+                                        ],
+                                        "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File config-docker.ps1"
+                                    }
+                                },
+                                "name": "VMCustomScriptVmExt_vmNodeType0Name"
                             }
                         ]
                     },
@@ -581,10 +589,21 @@
                             "managedDisk": {
                                 "storageAccountType": "Standard_LRS"
                             },
-                            "caching": "ReadWrite",
-                            "diskSizeGB": 128,
+                            "caching": "ReadOnly",
                             "createOption": "FromImage"
-                        }
+                        },
+                        "dataDisks": [
+                            {
+                                "lun": 0,
+                                "createOption": "Empty",
+                                "caching": "None",
+                                "managedDisk": {
+                                    "storageAccountType": "Standard_LRS"
+                                },
+                                "diskSizeGB": 128
+                            }
+                        ]
+
                     }
                 }
             },
