@@ -196,7 +196,7 @@
         "subnet0Prefix": "[parameters('subnet0Prefix')]",
         "subnet0Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('virtualNetworkName'), variables('subnet0Name'))]",
         "supportLogStorageAccountName": "lodusgaasta01",
-        "applicationDiagnosticsStorageAccountName": "lodusgaasta01",
+        "applicationDiagnosticsStorageAccountName": "lodusgaasta02",
         "lbName": "[parameters('lbName')]",
         "lbID0": "[resourceId('Microsoft.Network/loadBalancers',concat('LB','-', parameters('clusterName'),'-',variables('vmNodeType0Name')))]",
         "lbIPConfig0": "[concat(variables('lbID0'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
