@@ -213,7 +213,7 @@
         "supportLogStorageAccountName": "[parameters('supportLogStorageAccountName')]",
         "applicationDiagnosticsStorageAccountName": "[parameters('applicationDiagnosticsStorageAccountName')]",
         "lbName": "[parameters('lbName')]",
-        "lbID0": "[resourceId('Microsoft.Network/loadBalancers',concat('LB','-', parameters('clusterName'),'-',variables('vmNodeType0Name')))]",
+        "lbID0": "[resourceId('Microsoft.Network/loadBalancers',parameters('lbName'))]",
         "lbIPConfig0": "[concat(variables('lbID0'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
         "lbPoolID0": "[concat(variables('lbID0'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
         "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
