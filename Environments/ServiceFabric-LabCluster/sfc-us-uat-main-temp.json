@@ -70,35 +70,7 @@
                 "description": "Input endpoint2 for the application to use. Replace it with what your application uses"
             }
         },
-        "certificateStoreValue": {
-            "type": "string",
-            "allowedValues": [
-                "My"
-            ],
-            "defaultValue": "My",
-            "metadata": {
-                "description": "The store name where the cert will be deployed in the virtual machine"
-            }
-        },
-        "certificateThumbprint": {
-            "type": "string",
-            "defaultValue": "97B7B0E3CC4D671B2966D37077970A0A742B8B07",
-            "metadata": {
-                "description": "Certificate Thumbprint"
-            }
-        },
-        "sourceVaultResourceId": {
-            "type": "string",
-            "metadata": {
-                "description": "Resource Id of the key vault, is should be in the format of /subscriptions/<Sub ID>/resourceGroups/<Resource group name>/providers/Microsoft.KeyVault/vaults/<vault name>"
-            }
-        },
-        "certificateUrlValue": {
-            "type": "string",
-            "metadata": {
-                "description": "Refers to the location URL in your key vault where the certificate was uploaded, it is should be in the format of https://<name of the vault>.vault.azure.net:443/secrets/<exact location>"
-            }
-        },
+
         "clusterProtectionLevel": {
             "type": "string",
             "allowedValues": [
@@ -272,31 +244,7 @@
                "clusterName": "[parameters('tagName')]"
             }
         },
-        // {
-        //     "apiVersion": "2018-08-01",
-        //     "type": "Microsoft.Network/virtualNetworks",
-        //     "name": "[variables('virtualNetworkName')]",
-        //     "location": "[parameters('location')]",
-        //     "properties": {
-        //         "addressSpace": {
-        //             "addressPrefixes": [
-        //                 "[variables('addressPrefix')]"
-        //             ]
-        //         },
-        //         "subnets": [
-        //             {
-        //                 "name": "[variables('subnet0Name')]",
-        //                 "properties": {
-        //                     "addressPrefix": "[variables('subnet0Prefix')]"
-        //                 }
-        //             }
-        //         ]
-        //     },
-        //     "tags": {
-        //         "resourceType": "Service Fabric",
-        //        "clusterName": "[parameters('tagName')]"
-        //     }
-        // },
+        
         {
             "apiVersion": "2018-08-01",
             "type": "Microsoft.Network/publicIPAddresses",
@@ -479,8 +427,7 @@
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[variables('vmNodeType0Name')]",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                // "[variables('virtualNetworkName')]",
+            "dependsOn": [                
                 "[variables('lbName')]",
                 "[variables('supportLogStorageAccountName')]",
                 "[variables('applicationDiagnosticsStorageAccountName')]"
