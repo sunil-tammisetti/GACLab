@@ -103,7 +103,7 @@
         },
         "nodeTypeSize": {
             "type": "string",
-            "defaultValue": "Standard_D11_v2",
+            "defaultValue": "Standard_DS11_v2",
             "metadata": {
                 "description": "The VM size to use for cluster nodes."
             }
