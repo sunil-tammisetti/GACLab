@@ -44,7 +44,7 @@
         },
         "vmImageSku": {
             "type": "string",
-            "defaultValue": "datacenter-core-1803-with-containers-smalldisk-g2",
+            "defaultValue": "datacenter-core-1803-with-containers-smalldisk",
             "metadata": {
                 "description": "VM image SKU"
             }
