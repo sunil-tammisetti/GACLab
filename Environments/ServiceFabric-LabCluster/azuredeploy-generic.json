@@ -47,26 +47,7 @@
                 "description": "Key valut Name."
             }
         },
-        "certificate": {
-            "type": "string",
-            "minLength": 1,
-            "metadata": {
-                "description": "Certificate as Base64 encoded string."
-            }
-        },
-        "certificatePassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Certificate password for installation."
-            }
-        },
-        "certificateThumbprint": {
-            "type": "string",
-            "minLength": 1,
-            "metadata": {
-                "description": "Certificate thumbprint for identification in the local certificate store."
-            }
-        },
+   
         "virtualNetworkName": {
             "type": "string",
             "defaultValue": "vnt01",
@@ -159,7 +140,7 @@
     "variables": {
         "quickstartRepoRoot": "https://raw.githubusercontent.com/aravindan545/GACLab/master/Environments/ServiceFabric-LabCluster",
         "clusterName": "[parameters('clusterName')]",
-        "vaultName": "[parameters('vaultName')]",
+        "vaultName": "bopae-cac-kvt01",
         "vaultSecret": "ClusterCertificate",
         "loadBalancedAppPort1": "[parameters('appPort1')]",
         "loadBalancedAppPort2": "[parameters('appPort2')]",
@@ -176,50 +157,17 @@
         "tagName": "[parameters('tagName')]"
     },
     "resources": [
-        {
-            "name": "[variables('vaultName')]",
-            "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2015-06-01",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "resourceType": "Service Fabric",
-                "clusterName": "[parameters('tagName')]"
-            },
-            "properties": {
-                "enabledForDeployment": true,
-                "enabledForTemplateDeployment": false,
-                "enabledForVolumeEncryption": false,
-                "tenantId": "[subscription().tenantId]",
-                "sku": {
-                    "name": "standard",
-                    "family": "A"
-                },
-                "accessPolicies": []
-            }
-        },
-        {
-            "name": "[concat(variables('vaultName'), '/', variables('vaultSecret'))]",
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "apiVersion": "2015-06-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', variables('vaultName'))]"
-            ],
-            "properties": {
-                "value": "[base64(concat('{ \"data\":\"', parameters('certificate'), '\", \"dataType\":\"pfx\", \"password\":\"', parameters('certificatePassword'), '\" }'))]"
-            }
-        },
+      
         {
             "condition": "[equals(parameters('clusterOS'), 'Windows')]",
             "name": "[concat(deployment().name, '-QuickstartTemplate-Windows')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2015-01-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('vaultName'), variables('vaultSecret'))]"
-            ],
+           
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('quickstartRepoRoot'), '/sfc-us-uat-main.json')]",
+                    "uri": "[concat(variables('quickstartRepoRoot'), '/sfc-us-uat-main-temp.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -250,15 +198,7 @@
                     "loadBalancedAppPort2": {
                         "value": "[variables('loadBalancedAppPort2')]"
                     },
-                    "certificateThumbprint": {
-                        "value": "[parameters('certificateThumbprint')]"
-                    },
-                    "sourceVaultResourceId": {
-                        "value": "[resourceId('Microsoft.KeyVault/vaults', variables('vaultName'))]"
-                    },
-                    "certificateUrlValue": {
-                        "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', variables('vaultName'), variables('vaultSecret'))).secretUriWithVersion]"
-                    },
+                   
                     "nt0InstanceCount": {
                         "value": "[variables('nt0InstanceCount')]"
                     },
@@ -305,9 +245,7 @@
             "name": "[concat(deployment().name, '-QuickstartTemplate-Linux')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2015-01-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('vaultName'), variables('vaultSecret'))]"
-            ],
+           
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -342,15 +280,7 @@
                     "loadBalancedAppPort2": {
                         "value": "[variables('loadBalancedAppPort2')]"
                     },
-                    "certificateThumbprint": {
-                        "value": "[parameters('certificateThumbprint')]"
-                    },
-                    "sourceVaultValue": {
-                        "value": "[resourceId('Microsoft.KeyVault/vaults', variables('vaultName'))]"
-                    },
-                    "certificateUrlValue": {
-                        "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', variables('vaultName'), variables('vaultSecret'))).secretUriWithVersion]"
-                    },
+                    
                     "nt0InstanceCount": {
                         "value": "[variables('nt0InstanceCount')]"
                     },
