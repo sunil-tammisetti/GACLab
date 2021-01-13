@@ -37,7 +37,7 @@
         },
         "vmImageOffer": {
             "type": "string",
-            "defaultValue": "WindowsServer",
+            "defaultValue": "WindowsServerSemiAnnual",
             "metadata": {
                 "description": "VM image offer"
             }
